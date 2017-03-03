@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "836950992556",
+    "firebase_url": "https://fir-test-6b446.firebaseio.com",
+    "project_id": "fir-test-6b446",
+    "storage_bucket": "fir-test-6b446.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836950992556:android:a80e2b0e2adf9339",
+        "android_client_info": {
+          "package_name": "lucky.bottomnavigation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836950992556-pa69h9tjqi3lkvtv9m994eqd2tp95j3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBJZHzupwHHBeuoltzdQg6ke9XZZEXWb8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
