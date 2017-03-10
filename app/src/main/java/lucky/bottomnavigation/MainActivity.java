@@ -3,6 +3,8 @@ package lucky.bottomnavigation;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +14,12 @@ import android.widget.TextView;
 
 import com.wc.daily.utils.DisplayUtil;
 
+import java.lang.reflect.Field;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         ColorStateList list = ContextCompat.getColorStateList(this, R.color.nav_bg);
         navigation.setItemIconTintList(list);
         navigation.setItemTextColor(list);
@@ -30,20 +35,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 mTextMessage.setText(item.getTitle().toString().toUpperCase());
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        return true;
-                    case R.id.navigation_dashboard:
-
-                        return true;
-                    case R.id.navigation_notifications:
-
-                        return true;
-                }
-                return false;
+                return true;
             }
         });
+        disableShiftMode(navigation);
         Log.i("MainActivity", DisplayUtil.dip2px(this, 5) + "");
+    }
+
+    public static void disableShiftMode(BottomNavigationView navigationView) {
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigationView.getChildAt(0);
+        try {
+            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+            shiftingMode.setAccessible(true);
+            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setAccessible(false);
+
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+                BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
+                itemView.setShiftingMode(false);
+                itemView.setChecked(itemView.getItemData().isChecked());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
